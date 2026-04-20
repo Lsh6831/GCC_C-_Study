@@ -2,8 +2,6 @@
 #include <String>
 using namespace std;
 
-
-
 int main()
 {
 
@@ -23,7 +21,7 @@ int main()
 	int hp = 100;
 	int mp = 100;
 	float attackSpeed = dexterity / 10.0;
-	float attckDamage = strength * 0.2f;
+	float attackDamage = strength * 0.2f;
 	double movingSpeed = dexterity / 30.0;
 	
 	//
@@ -101,7 +99,7 @@ int main()
 	cout << "Class : " << charactorClass << "\n";
 	cout << "Level : " << level<<"\n";
 	cout << "HP : " << hp << "\n";
-	cout << "Attck Damage : " << attckDamage << "\n";
+	cout << "Attck Damage : " << attackDamage << "\n";
 	cout << "Attack Speed : " << attackSpeed << "\n";
 	cout << "MovingSpeed : " << movingSpeed << "\n";
 	cout << "Strength : " << strength << "\n";	
@@ -115,11 +113,43 @@ int main()
 	cout << "ColdRessist : " << coldRessist << "\n";
 	cout << "PoisonRessist : " << poisonRessist << "\n";
 
+	//기본 전
+	int gobleinHP = 30;
+	int action;
+	cout << "\n[System] You encoutered a Goblin";
 
-	// 3. siezof 연사자를 이용한 메모리 크기 확인
-	cout << "[Memory Check] int type size : " << sizeof(hp) << "bytes\n";
-	cout << "[Memory Check] vool type size : " << sizeof(isHardcore) << " bytes\n";
+	while (gobleinHP > 0 && hp > 0)
+	{
+		cout << "\n[ Goblin HP:" << gobleinHP << "l MyHP:" << hp << "]\n";
+			cout << "1. Attack : ";
+		cin >> action;
 
+		if (action == 1)
+		{
+			gobleinHP -= attackDamage;
+			cout << "=> You attack th Goblin!(-" << attackDamage << ")\n";
+
+			if (gobleinHP > 0)
+			{
+				hp - 30;
+				cout << "=> The Goblin in a attacked ypu! (-30)|n";
+			}
+		}
+		else
+		{
+			cout << "=> Invalid action! YOustumbled and the Goblin sei";
+			hp - 30;
+			cout << "ss";
+		}
+	}
+
+	cout << "\n";
+	if (hp <= 0) {
+		cout << "\n";
+	}
+	else {
+		cout << "\n";
+	}
 
 	
 	return 0;
