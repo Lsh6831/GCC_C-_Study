@@ -1,12 +1,16 @@
 #include <iostream>
+#include <String>
 using namespace std;
 
 
-char userName[50];
-char charactorClass[50];
 
 int main()
 {
+
+	char userName[50];
+	//char charactorClass[50];
+	string charactorClass;
+	int classChoiceInput;
 
 	//스탯 시스템
 	int strength = 50;
@@ -21,6 +25,9 @@ int main()
 	float attackSpeed = dexterity / 10.0;
 	float attckDamage = strength * 0.2f;
 	double movingSpeed = dexterity / 30.0;
+	
+	//
+	char hardcoreInput = true;
 
 
 
@@ -39,14 +46,58 @@ int main()
 	cout << "[ Character Creation ]\n";
 	cout << "Input your name : ";
 	cin >> userName;
-	cout << "Input your Class : ";
-	cin >> charactorClass;
+
+	cout << "Select your Class : \n";
+	cout << "1. Amazon\n2. Assassin\n3. Barbarian\n4. Druid\n";
+	cout << "4. Necromancer\n6. Paladin\n7. Socreress\n8. Warlcock\n";
+	cout << "Input Class Number : ";
+	cin >> classChoiceInput;
+
+	switch (classChoiceInput)
+	{
+	case 1: charactorClass = "Amazon"; break;
+	case 2: charactorClass = "Assassin"; break;
+	case 3: charactorClass = "Barbarian"; break;
+	case 4: charactorClass = "Druid"; break;
+	case 5: charactorClass = "Necromancer"; break;
+	case 6: charactorClass = "Paladin"; break;
+	case 7: charactorClass = "Socreress"; break;
+	case 8: charactorClass = "Warlcock"; break;
+	default: charactorClass = "UnKnown";
+		cout << " [System] Invalid class selection. Default to 'Unknown'\n";
+		break;
+	}
+
+
+
+
+	//cin >> charactorClass;
+	cout << "Enable Hardcore Mode ? (1) Yes / (2) NO : \n";
+	cin >> hardcoreInput;
+
+	if (hardcoreInput == '1')
+	{
+		isHardcore = true;
+		cout << "[System] Hardcore mode enable. Death is permanvent.\n";
+	}
+	else if(hardcoreInput =='2')
+	{
+		isHardcore = false;
+		cout << "[System] Standard mode Enable.\n";
+	}
+	else
+	{
+		isHardcore = false;
+		cout << "[System] Invalid input . Defaulting to Standard.\n";
+	}
+
+
 	
 	cout << "\n:::::::Welcom to the SCancuart ::::::\n";
 	cout << "user Name : {" << userName << "\n}";
 
 	//2. 변수에 저장된 데이터 출력
-	cout << "------------Character Status----------|n";
+	cout << "------------Character Status----------\n";
 	cout << "Class : " << charactorClass << "\n";
 	cout << "Level : " << level<<"\n";
 	cout << "HP : " << hp << "\n";
