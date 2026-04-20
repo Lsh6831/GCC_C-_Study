@@ -19,6 +19,13 @@ int main()
 	int vitallity = 50;
 	int energy = 50;
 
+	//Ressist
+	int fireResist = 0;
+	int lightingRessist = 0;
+	int coldRessist = 0;
+	int poisonRessist = 0;
+
+
 	// 하드코어 모드 여부 변수
 	bool isHardcore = true;
 
@@ -37,17 +44,21 @@ int main()
 	cout << "Level : " << level<<"\n";
 	cout << "HP : " << hp << "\n";
 	cout << "Attack Speed : " << attackspeed << "\n";
-	cout << "Strength : " << strength << "\n";
+	cout << "Strength : " << strength << "\n";	
 	cout << "Dexterity : " << dexterity << "\n";
 	cout << "Vitalty : " << vitallity << "\n";
 	cout << "Energy : " << energy << "\n";
 	cout << "Hardcore Mode : " << isHardcore << "(1: true, 0: flase)\n";
 
+	cout << "Fire Resistance : " << fireResist << "\n";
+	cout << "LightingRessist : " << lightingRessist << "\n";
+	cout << "ColdRessist : " << coldRessist << "\n";
+	cout << "PoisonRessist : " << poisonRessist << "\n";
+
+
 	// 3. siezof 연사자를 이용한 메모리 크기 확인
 	cout << "[Memory Check] int type size : " << sizeof(hp) << "bytes\n";
 	cout << "[Memory Check] vool type size : " << sizeof(isHardcore) << " bytes\n";
-
-
 
 
 	
