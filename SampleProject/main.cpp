@@ -112,6 +112,8 @@ int main()
 	*ptr = 200; // 포인터를 역참조하여 hp 값 쓰기및 수정
 	cout << "hp변수의 새로운 값 : " << hp << "\n";
 
+	//int* tprt2 = nullptr;  //nulptr 안전 초기화 
+	//cout << "tprt2 값 : " << *tprt2 << "\n";
 	
 
 
