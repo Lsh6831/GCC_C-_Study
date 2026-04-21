@@ -165,6 +165,18 @@ int main()
 		sPtr++;//+1 다음 원소로 이동
 	}
 
+	// Wild Poiter 위험
+	//int* wildPtr; // 초기화 안 함 => 쓰레기 주소값이 들어갈 것임
+	//*wildPtr = 100; // CRASH 발생 , 잘못된 메모리에 접근하고 있음
+	// 위 상태는 안됨
+
+	int* wildPtr = nullptr; // 안전한 초기화를 위한 예약어 nullptr 사용
+	if (wildPtr != nullptr) // wildPtrddml null 체크 조건문
+	{
+		*wildPtr = 100;//실행 안됨
+	}
+	cout << "wildPtr : " << wildPtr << "\n"; // wildPtr
+
 
 
 	cout << "================================================================================\n";
