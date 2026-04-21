@@ -128,6 +128,16 @@ int main()
 	cout << "ptr 1 : " << ptr << "\n";
 	cout << "ptr 2 : " << ptr +1 << "\n";
 	cout << "ptr 3 : " << ptr +2 << "\n";
+
+	int score[5] = { 85,92,78,95,88 };
+	cout << "&score[0] : " << &score[0] << "\n";
+	cout << "&score[0] : " << &score[1] << "\n";
+	cout << "&score[0] : " << &score[2] << "\n";
+	cout << "&score[0] : " << &score[3] << "\n";
+	cout << "&score[0] : " << &score[4] << "\n";
+
+
+
 	
 
 
