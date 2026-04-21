@@ -144,9 +144,19 @@ int main()
 	cout << "*(scores+2) : " << *(scores + 2) << "\n";// 포인터 연산
 
 	cout << "scores[2] : " << scores[2] << "\n";// 이거랑 같은건감
+
+	// 현변환의 예외상황 1. sizeof()사용
+
+	cout << "sizeof(scores) : " << sizeof(scores) << "\n";
+	cout << "sizeof(scores 원소 개수 ) : " << sizeof(scores)/sizeof(scores[0]) << "\n";
 	
 
-	
+	// 형변환의 예외상항 2 &(주소)연사자 사용
+	cout << "scores : " << scores << "\n"; // 시작 주소
+	cout << "scores+1 : " << scores+1 << "\n"; // +4원소 단위로 int 만큼
+	cout << "&scores : " << &scores << "\n"; // 시작 주소
+	cout << "&scores+11 : " << &scores + 1 << "\n"; // +20 배열 전체 단위로 이동
+
 
 
 	cout << "================================================================================\n";
