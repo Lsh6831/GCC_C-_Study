@@ -2,6 +2,7 @@
 #include <String>
 #include <cstdlib>
 #include <ctime>
+#include <windows.h>
 
 using namespace std;
 
@@ -55,6 +56,9 @@ void ShowEnding(bool isVictory, bool isHardcore) {
 
 int main()
 {
+	// 콘솔 출력 인코딩을 UTF-8로 설정 (한글 깨짐 방지)
+	SetConsoleOutputCP(CP_UTF8);
+	SetConsoleCP(CP_UTF8);
 
 	char userName[50];
 	//char charactorClass[50];
@@ -93,10 +97,22 @@ int main()
 	bool isHardcore = true;
 
 
+	// "&" 주소 연산자
 
 	cout << "hp변수의 값 : " << hp << "\n";
 	cout << "hp변수의 주소값 : " << &hp << "\n"; //변수의 주소값 출력 & 앰퍼샌드 연산자 사용
 	//system("pause"); 이거 왜 시스템 오류 나지
+
+	//"*" 역참조 연산자
+
+	int* ptr = &hp;
+	cout << "ptr ==&hp :" << ptr<<"\n";
+	cout << "ptr 값 : " << *ptr << "\n"; // 포인터를 역참조 하여 hp 값 읽기
+	
+	*ptr = 200; // 포인터를 역참조하여 hp 값 쓰기및 수정
+	cout << "hp변수의 새로운 값 : " << hp << "\n";
+
+	
 
 
 	cout << "================================================================================\n";
