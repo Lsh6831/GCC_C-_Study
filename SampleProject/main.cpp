@@ -37,8 +37,10 @@ void ShowEnding(bool isVictory, bool isHardcore) {
 		cout << " --------------------------------------------\n";
 		srand((unsigned int)time(NULL));
 
-		for (int i = 1; i <= 3; i++) {
-			int lootRoll = rand() % 4;
+		
+
+
+		/*	int lootRoll = rand() % 4;
 			string itemName;
 
 			if (lootRoll == 0) itemName = "Gold Pouch";
@@ -46,11 +48,18 @@ void ShowEnding(bool isVictory, bool isHardcore) {
 			else if (lootRoll == 2) itemName = "Steel Sword";
 			else itemName = "Leather Armor";
 
-			cout << "  * Slot [" << i << "]: " << itemName << " found!\n";
-		}
+			cout << "  * Slot [" << i << "]: " << itemName << " found!\n";*/
+		
+
+		// 포인터 순화로 인벤토리 출력 (5칸)
 		cout << " --------------------------------------------\n";
+		cout << " --------------------------------------------\n";
+		cout << " --------------------------------------------\n";
+		
+
+		/*cout << " --------------------------------------------\n";
 		cout << " [System] Adventure complete. Press [Enter] to exit.";
-		cin.get();
+		cin.get();*/
 	}
 }
 
@@ -96,87 +105,98 @@ int main()
 	// 하드코어 모드 여부 변수
 	bool isHardcore = true;
 
+	//인벤토리 (0=빈칸 , 1= Gold , 2= Healing Potion, 3=Wrapon, 4=Armor)
+	int gameInventory[5] = { 0,1,2,3,4 };
 
+#pragma region 260421 연산자
 	//// "&" 주소 연산자
 
 	//cout << "hp변수의 값 : " << hp << "\n";
 	//cout << "hp변수의 주소값 : " << &hp << "\n"; //변수의 주소값 출력 & 앰퍼샌드 연산자 사용
 	////system("pause"); 이거 왜 시스템 오류 나지
 
-	//"*" 역참조 연산자
+	////"*" 역참조 연산자
 
-	int* ptr = &hp;
-	cout << "ptr ==&hp :" << ptr<<"\n";
-	cout << "ptr 값 : " << *ptr << "\n"; // 포인터를 역참조 하여 hp 값 읽기
-	
-	*ptr = 200; // 포인터를 역참조하여 hp 값 쓰기및 수정
-	cout << "hp변수의 새로운 값 : " << hp << "\n";
+	//int* ptr = &hp;
+	//cout << "ptr ==&hp :" << ptr<<"\n";
+	//cout << "ptr 값 : " << *ptr << "\n"; // 포인터를 역참조 하여 hp 값 읽기
+	//
+	//*ptr = 200; // 포인터를 역참조하여 hp 값 쓰기및 수정
+	//cout << "hp변수의 새로운 값 : " << hp << "\n";
 
-	//int* tprt2 = nullptr;  //nulptr 안전 초기화 
-	//cout << "tprt2 값 : " << *tprt2 << "\n";
+	////int* tprt2 = nullptr;  //nulptr 안전 초기화 
+	////cout << "tprt2 값 : " << *tprt2 << "\n";
 
-	cout << "sizeof(int) : " << sizeof(int) << "byte\n";
-	cout << "sizeof(int*) : " << sizeof(int*) << "byte\n"; //포인터 변수는 주소를 담기 때문에 모두 8바이트로 되어있음
-	cout << "sizeof(double) : " << sizeof(double) << "byte\n";
-	cout << "sizeof(double-) : " << sizeof(double*) << "byte\n";
-	cout << "sizeof(char*) : " << sizeof(char*) << "byte\n";
+	//cout << "sizeof(int) : " << sizeof(int) << "byte\n";
+	//cout << "sizeof(int*) : " << sizeof(int*) << "byte\n"; //포인터 변수는 주소를 담기 때문에 모두 8바이트로 되어있음
+	//cout << "sizeof(double) : " << sizeof(double) << "byte\n";
+	//cout << "sizeof(double-) : " << sizeof(double*) << "byte\n";
+	//cout << "sizeof(char*) : " << sizeof(char*) << "byte\n";
 
-	
+	//
 
-	// 포인터 연산 (+1 = 자료형 메모리 크기만큼 이동)
+	//// 포인터 연산 (+1 = 자료형 메모리 크기만큼 이동)
 
-	cout << "ptr 1 : " << ptr << "\n";
-	cout << "ptr 2 : " << ptr +1 << "\n";
-	cout << "ptr 3 : " << ptr +2 << "\n";
+	//cout << "ptr 1 : " << ptr << "\n";
+	//cout << "ptr 2 : " << ptr +1 << "\n";
+	//cout << "ptr 3 : " << ptr +2 << "\n";
 
-	// 배열의 
-	int scores[5] = { 85,92,78,95,88 };
-	cout << "&scores[0] : " << &scores[0] << "\n";
-	cout << "&scores[0] : " << &scores[1] << "\n";
-	cout << "&scores[0] : " << &scores[2] << "\n";
-	cout << "&scores[0] : " << &scores[3] << "\n";
-	cout << "&scores[0] : " << &scores[4] << "\n";
+	//// 배열의 
+	//int scores[5] = { 85,92,78,95,88 };
+	//cout << "&scores[0] : " << &scores[0] << "\n";
+	//cout << "&scores[0] : " << &scores[1] << "\n";
+	//cout << "&scores[0] : " << &scores[2] << "\n";
+	//cout << "&scores[0] : " << &scores[3] << "\n";
+	//cout << "&scores[0] : " << &scores[4] << "\n";
 
-	// 배열 이름이 시작 주소로 형변환 (Pointer Decay)
-	cout << "scores : " << scores << "\n"; //배열 이름
-	cout << "&scores[0] : " << &scores[0] << "\n";// 첫 원소 주소
-	cout << "scores[2] : " << &scores[2] << "\n";// 인덱스로 접근
-	cout << "*(scores+2) : " << *(scores + 2) << "\n";// 포인터 연산
+	//// 배열 이름이 시작 주소로 형변환 (Pointer Decay)
+	//cout << "scores : " << scores << "\n"; //배열 이름
+	//cout << "&scores[0] : " << &scores[0] << "\n";// 첫 원소 주소
+	//cout << "scores[2] : " << &scores[2] << "\n";// 인덱스로 접근
+	//cout << "*(scores+2) : " << *(scores + 2) << "\n";// 포인터 연산
 
-	cout << "scores[2] : " << scores[2] << "\n";// 이거랑 같은건감
+	//cout << "scores[2] : " << scores[2] << "\n";// 이거랑 같은건감
 
-	// 현변환의 예외상황 1. sizeof()사용
+	//// 현변환의 예외상황 1. sizeof()사용
 
-	cout << "sizeof(scores) : " << sizeof(scores) << "\n";
-	cout << "sizeof(scores 원소 개수 ) : " << sizeof(scores)/sizeof(scores[0]) << "\n";
-	
+	//cout << "sizeof(scores) : " << sizeof(scores) << "\n";
+	//cout << "sizeof(scores 원소 개수 ) : " << sizeof(scores)/sizeof(scores[0]) << "\n";
+	//
 
-	// 형변환의 예외상항 2 &(주소)연사자 사용
-	cout << "scores : " << scores << "\n"; // 시작 주소
-	cout << "scores+1 : " << scores+1 << "\n"; // +4원소 단위로 int 만큼
-	cout << "&scores : " << &scores << "\n"; // 시작 주소
-	cout << "&scores+11 : " << &scores + 1 << "\n"; // +20 배열 전체 단위로 이동
+	//// 형변환의 예외상항 2 &(주소)연사자 사용
+	//cout << "scores : " << scores << "\n"; // 시작 주소
+	//cout << "scores+1 : " << scores+1 << "\n"; // +4원소 단위로 int 만큼
+	//cout << "&scores : " << &scores << "\n"; // 시작 주소
+	//cout << "&scores+11 : " << &scores + 1 << "\n"; // +20 배열 전체 단위로 이동
 
-	// for 반복문을 통한 배열 순환
-	int* sPtr = scores;
-	for (int i = 0;i < 5; i++)
-	{
-		cout << "주소 : " << sPtr << " 값 : "<<*sPtr << "\n"; // 시작 주소
-		sPtr++;//+1 다음 원소로 이동
-	}
+	//// for 반복문을 통한 배열 순환
+	//int* sPtr = scores;
+	//for (int i = 0;i < 5; i++)
+	//{
+	//	cout << "주소 : " << sPtr << " 값 : "<<*sPtr << "\n"; // 시작 주소
+	//	sPtr++;//+1 다음 원소로 이동
+	//}
 
-	// Wild Poiter 위험
-	//int* wildPtr; // 초기화 안 함 => 쓰레기 주소값이 들어갈 것임
-	//*wildPtr = 100; // CRASH 발생 , 잘못된 메모리에 접근하고 있음
-	// 위 상태는 안됨
+	//// Wild Poiter 위험
+	////int* wildPtr; // 초기화 안 함 => 쓰레기 주소값이 들어갈 것임
+	////*wildPtr = 100; // CRASH 발생 , 잘못된 메모리에 접근하고 있음
+	//// 위 상태는 안됨
 
-	int* wildPtr = nullptr; // 안전한 초기화를 위한 예약어 nullptr 사용
-	if (wildPtr != nullptr) // wildPtrddml null 체크 조건문
-	{
-		*wildPtr = 100;//실행 안됨
-	}
-	cout << "wildPtr : " << wildPtr << "\n"; // wildPtr
+	//int* wildPtr = nullptr; // 안전한 초기화를 위한 예약어 nullptr 사용
+	//if (wildPtr != nullptr) // wildPtrddml null 체크 조건문
+	//{
+	//	*wildPtr = 100;//실행 안됨
+	//}
+	//cout << "wildPtr : " << wildPtr << "\n"; // wildPtr
 
+	////허상 포인터 예시
+	//int* danglePtr = new int(100); // 동적 할당
+	//cout << "삭제(delete) 전 : " << *danglePtr << "\n"; 
+	//delete danglePtr; // 메모리 해제 , 삭제
+	////*danglePtr = 200; // 해체된 메모리에 할당하려 하고 있음. Runtime CRASH 발생
+	//danglePtr = nullptr; //안전 처리
+	//cout << "danglePtr : " << danglePtr << "\n";
+#pragma endregion 설명_안적어도_됨
 
 
 	cout << "================================================================================\n";
@@ -379,7 +399,72 @@ int main()
 	}
 
 	// 전투 종료 및 엔딩 호출
-	ShowEnding(hp > 0, isHardcore);
+	bool isVictory = (hp > 0);
+	system("cls"); // 엔딩 페이지를 위해 화면 정리
 
-	return 0;
+	if (!isVictory) {
+		cout << "  __      ______  _    _   _____ _____ ______ _____  \n";
+		cout << "  \\ \\   / / __ \\| |  | | |  __ \\_   _|  ____|  __ \\ \n";
+		cout << "   \\ \\_/ / |  | | |  | | | |  | || | | |__  | |  | |\n";
+		cout << "    \\   /| |  | | |  | | | |  | || | |  __| | |  | |\n";
+		cout << "     | | | |__| | |__| | | |__| || |_| |____| |__| |\n";
+		cout << "     |_|  \\____/ \\____/  |_____/_____|______|_____/ \n";
+		cout << "\n [System] You died...\n";
+		if (isHardcore) {
+			cout << " [System] Hardcore Mode: Your character has been deleted forever.\n";
+		}
+	}
+	else {
+		cout << "  __       _______ _____ _______  ____  _______     __ \n";
+		cout << "  \\ \\    / /_   _/ ____|__   __|/ __ \\|  __ \\ \\   / / \n";
+		cout << "   \\ \\  / /   | || |       | |  | |  | | |__) \\ \\_/ /  \n";
+		cout << "    \\ \\/ /    | || |       | |  | |  | |  _  / \\   /   \n";
+		cout << "     \\  /    _| || |____   | |  | |__| | | \\ \\  | |    \n";
+		cout << "      \\/    |_____\\_____|  |_|   \\____/|_|  \\_\\ |_|    \n";
+		cout << "\n [System] You defeated the Goblin!\n";
+		cout << " [System] Press [Enter] to claim your rewards...";
+		cin.get();
+
+		// 여기서 전역 변수 gameInventory 등을 사용할 수 있습니다.
+		cout << "\n [ LOOT WINDOW ]\n";
+		cout << " --------------------------------------------\n";
+		srand((unsigned int)time(NULL));
+
+		int* invPtr = gameInventory; //invPtr -> gameInventory 시작주소 [0]
+
+		for (int i = 1; i <= 3; i++) {
+			*invPtr = rand() % 4 + 1;
+			invPtr++;
+		}
+
+		invPtr = gameInventory;// 처음으로 리셋
+		int slot = 0;
+
+		/*for (int i = 1; i <= 3; i++) {
+			int lootRoll = rand() % 4;
+			string itemName;
+
+			if (lootRoll == 0) itemName = "Gold Pouch";
+			else if (lootRoll == 1) itemName = "Healing Potion";
+			else if (lootRoll == 2) itemName = "Steel Sword";
+			else itemName = "Leather Armor";
+
+			cout << "  * Slot [" << i << "]: " << itemName << " found!\n";
+		}*/
+		while (invPtr < gameInventory + 5) {
+			string itemName;
+			if (*invPtr == 1) itemName = "Gold";
+			else if (*invPtr == 2) itemName = "Healing Potion";
+			else if (*invPtr == 3) itemName = "Weapon";
+			else if (*invPtr == 4) itemName = "Armor";
+			else itemName = "None";
+			//cout << " > Slot "<< slot << setw(46) << "[" << itemName<<"]\n";
+			cout << " > Slot " << slot << "[" << itemName << "]\n";
+			invPtr++;
+			slot++;
+		}
+		cout << " --------------------------------------------\n";
+		cout << " [System] Adventure complete. Press [Enter] to exit.";
+		cin.get();
+	}
 }
