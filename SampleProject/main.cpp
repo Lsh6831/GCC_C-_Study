@@ -129,14 +129,22 @@ int main()
 	cout << "ptr 2 : " << ptr +1 << "\n";
 	cout << "ptr 3 : " << ptr +2 << "\n";
 
-	int score[5] = { 85,92,78,95,88 };
-	cout << "&score[0] : " << &score[0] << "\n";
-	cout << "&score[0] : " << &score[1] << "\n";
-	cout << "&score[0] : " << &score[2] << "\n";
-	cout << "&score[0] : " << &score[3] << "\n";
-	cout << "&score[0] : " << &score[4] << "\n";
+	// 배열의 
+	int scores[5] = { 85,92,78,95,88 };
+	cout << "&scores[0] : " << &scores[0] << "\n";
+	cout << "&scores[0] : " << &scores[1] << "\n";
+	cout << "&scores[0] : " << &scores[2] << "\n";
+	cout << "&scores[0] : " << &scores[3] << "\n";
+	cout << "&scores[0] : " << &scores[4] << "\n";
 
+	// 배열 이름이 시작 주소로 형변환 (Pointer Decay)
+	cout << "scores : " << scores << "\n"; //배열 이름
+	cout << "&scores[0] : " << &scores[0] << "\n";// 첫 원소 주소
+	cout << "scores[2] : " << &scores[2] << "\n";// 인덱스로 접근
+	cout << "*(scores+2) : " << *(scores + 2) << "\n";// 포인터 연산
 
+	cout << "scores[2] : " << scores[2] << "\n";// 이거랑 같은건감
+	
 
 	
 
