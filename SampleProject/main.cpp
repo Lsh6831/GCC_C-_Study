@@ -97,11 +97,11 @@ int main()
 	bool isHardcore = true;
 
 
-	// "&" 주소 연산자
+	//// "&" 주소 연산자
 
-	cout << "hp변수의 값 : " << hp << "\n";
-	cout << "hp변수의 주소값 : " << &hp << "\n"; //변수의 주소값 출력 & 앰퍼샌드 연산자 사용
-	//system("pause"); 이거 왜 시스템 오류 나지
+	//cout << "hp변수의 값 : " << hp << "\n";
+	//cout << "hp변수의 주소값 : " << &hp << "\n"; //변수의 주소값 출력 & 앰퍼샌드 연산자 사용
+	////system("pause"); 이거 왜 시스템 오류 나지
 
 	//"*" 역참조 연산자
 
@@ -120,6 +120,14 @@ int main()
 	cout << "sizeof(double) : " << sizeof(double) << "byte\n";
 	cout << "sizeof(double-) : " << sizeof(double*) << "byte\n";
 	cout << "sizeof(char*) : " << sizeof(char*) << "byte\n";
+
+	
+
+	// 포인터 연산 (+1 = 자료형 메모리 크기만큼 이동)
+
+	cout << "ptr 1 : " << ptr << "\n";
+	cout << "ptr 2 : " << ptr +1 << "\n";
+	cout << "ptr 3 : " << ptr +2 << "\n";
 	
 
 
