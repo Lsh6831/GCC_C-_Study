@@ -114,6 +114,12 @@ int main()
 
 	//int* tprt2 = nullptr;  //nulptr 안전 초기화 
 	//cout << "tprt2 값 : " << *tprt2 << "\n";
+
+	cout << "sizeof(int) : " << sizeof(int) << "byte\n";
+	cout << "sizeof(int*) : " << sizeof(int*) << "byte\n"; //포인터 변수는 주소를 담기 때문에 모두 8바이트로 되어있음
+	cout << "sizeof(double) : " << sizeof(double) << "byte\n";
+	cout << "sizeof(double-) : " << sizeof(double*) << "byte\n";
+	cout << "sizeof(char*) : " << sizeof(char*) << "byte\n";
 	
 
 
