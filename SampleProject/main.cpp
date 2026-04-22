@@ -15,6 +15,13 @@ void PreviewCritical(float attackDamage)
 	cout << "크리티컬 예상 데미지" << attackDamage << "\n";
 }
 
+// Call by Address : 주소 전달 -> 원본 직접 수정 가능
+void LevelUp(int* level)
+{
+	(*level)++;//역참조로 level 원본 직접 증가
+}
+
+
 // --- 엔딩 장면 출력 함수 ---
 void ShowEnding(bool isVictory, bool isHardcore) {
 	system("cls"); // 엔딩 페이지를 위해 화면 정리
@@ -121,6 +128,12 @@ int main()
 	cout << "원본 attackDamage" << attackDamage << "\n";
 	PreviewCritical(attackDamage);
 	cout << "호출 attackDamage" << attackDamage << "\n";
+
+
+	//Call By Address : 주소 전달 -> 원본의 불변 확인
+	cout << "After LevelUp Level" << level << "\n";
+	LevelUp(&level);
+	cout << "Befor LevelUp Level" << level << "\n";
 
 
 
