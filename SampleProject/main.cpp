@@ -20,6 +20,11 @@ void LevelUp(int* level)
 {
 	(*level)++;//역참조로 level 원본 직접 증가
 }
+// Call By Reference: 참조자 전달 -> * 없이 직접 수정
+void LevelUpRef(int& level) {
+	level++;
+}
+
 
 
 // --- 엔딩 장면 출력 함수 ---
@@ -137,12 +142,17 @@ int main()
 
 
 
-	//Call By Reference : 별칭 (alias)선언 -> 원본과 같은 메모리
-	int levelRef = level;
-	levelRef++;
-	
-	cout << "levelRef++ After : " << level << "\n";
-	cout << "levelRef++ Befor : " << levelRef << "\n";
+	////Call By Reference : 별칭 (alias)선언 -> 원본과 같은 메모리
+	//int levelRef = level;
+	//levelRef++;
+	//
+	//cout << "levelRef++ After : " << level << "\n";
+	//cout << "levelRef++ Befor : " << levelRef << "\n";
+
+		// Call By Reference: & 없이 호출, * 없이 수정
+	cout << "levelUpRef() 호출 전 원본 level: " << level << "\n";
+	LevelUpRef(level); // & 없이 그냥 변수명
+	cout << "levelUpRef() 호출 후 원본 level: " << level << "\n";
 
 #pragma region 260421 연산자
 		//// "&" 주소 연산자
