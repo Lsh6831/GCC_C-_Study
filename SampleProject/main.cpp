@@ -131,11 +131,18 @@ int main()
 
 
 	//Call By Address : 주소 전달 -> 원본의 불변 확인
-	cout << "After LevelUp Level" << level << "\n";
+	cout << "After LevelUp Level : " << level << "\n";
 	LevelUp(&level);
-	cout << "Befor LevelUp Level" << level << "\n";
+	cout << "Befor LevelUp Level : " << level << "\n";
 
 
+
+	//Call By Reference : 별칭 (alias)선언 -> 원본과 같은 메모리
+	int levelRef = level;
+	levelRef++;
+	
+	cout << "levelRef++ After : " << level << "\n";
+	cout << "levelRef++ Befor : " << levelRef << "\n";
 
 #pragma region 260421 연산자
 		//// "&" 주소 연산자
