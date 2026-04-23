@@ -24,7 +24,7 @@ void ApplyCriticalDamage(int& goblinHp, float attackDamage) {
 	// Call By Address: 주소 전달 -> 원본 직접 수정 가능
 	//void LevelUp(int* level) {
 	//	(*level)++;	// 역참조로 level 원본 직접 증가
-	//}
+	}
 
 // Call By Reference: 참조자 전달 -> * 없이 직접 수정
 void LevelUpRef(int& level) {
@@ -444,10 +444,10 @@ int main()
 		else if (action == 2)
 		{
 			PreviewCritical(attackDamage);
-			ApplyCriticalDamage(goblinHp, attackDamage);
+			ApplyCriticalDamage(gobleinHP, attackDamage);
 			cout << "\n>> [YOU] Critical Hit! " << (int)attackDamage * 2 << " damage!\n";
 
-			if (goblinHp > 0) {
+			if (gobleinHP > 0) {
 				cout << ">> [GOBLIN] counter-attacked! You lost 30 HP.\n";
 				hp -= 30;
 			}
