@@ -47,62 +47,6 @@ void PrintLevel(const int& level) {
 
 
 
-// --- 엔딩 장면 출력 함수 ---
-void ShowEnding(bool isVictory, bool isHardcore) {
-	system("cls"); // 엔딩 페이지를 위해 화면 정리
-
-	if (!isVictory) {
-		cout << "  __     ______  _    _   _____ _____ ______ _____  \n";
-		cout << "  \\ \\   / / __ \\| |  | | |  __ \\_   _|  ____|  __ \\ \n";
-		cout << "   \\ \\_/ / |  | | |  | | | |  | || | | |__  | |  | |\n";
-		cout << "    \\   /| |  | | |  | | | |  | || | |  __| | |  | |\n";
-		cout << "     | | | |__| | |__| | | |__| || |_| |____| |__| |\n";
-		cout << "     |_|  \\____/ \\____/  |_____/_____|______|_____/ \n";
-		cout << "\n [System] You died...\n";
-		if (isHardcore) {
-			cout << " [System] Hardcore Mode: Your character has been deleted forever.\n";
-		}
-	}
-	else {
-		cout << "  __      _______ _____ _______  ____  _______     __ \n";
-		cout << "  \\ \\    / /_   _/ ____|__   __|/ __ \\|  __ \\ \\   / / \n";
-		cout << "   \\ \\  / /  | || |       | |  | |  | | |__) \\ \\_/ /  \n";
-		cout << "    \\ \\/ /   | || |       | |  | |  | |  _  / \\   /   \n";
-		cout << "     \\  /   _| || |____   | |  | |__| | | \\ \\  | |    \n";
-		cout << "      \\/   |_____\\_____|  |_|   \\____/|_|  \\_\\ |_|    \n";
-		cout << "\n [System] You defeated the Goblin!\n";
-		cout << " [System] Press [Enter] to claim your rewards...";
-		cin.get();
-
-		cout << "\n [ LOOT WINDOW ]\n";
-		cout << " --------------------------------------------\n";
-		srand((unsigned int)time(NULL));
-
-		
-
-
-		/*	int lootRoll = rand() % 4;
-			string itemName;
-
-			if (lootRoll == 0) itemName = "Gold Pouch";
-			else if (lootRoll == 1) itemName = "Healing Potion";
-			else if (lootRoll == 2) itemName = "Steel Sword";
-			else itemName = "Leather Armor";
-
-			cout << "  * Slot [" << i << "]: " << itemName << " found!\n";*/
-		
-
-		// 포인터 순화로 인벤토리 출력 (5칸)
-		cout << " --------------------------------------------\n";
-		cout << " --------------------------------------------\n";
-		cout << " --------------------------------------------\n";
-		
-
-		/*cout << " --------------------------------------------\n";
-		cout << " [System] Adventure complete. Press [Enter] to exit.";
-		cin.get();*/
-	}
-}
 
 int main()
 {
@@ -263,7 +207,8 @@ int main()
 		battle.Run();
 
 		// --- 시각적 HP 바 출력 함수 대체 로직 ---
-		auto printHPBar = [](string name, int current, int max) {
+		auto printHPBar = [](string name, int current, int max) 
+		{
 			int barWidth = 20;
 			float ratio = (float)current / max;
 			int pos = barWidth * ratio;
@@ -309,48 +254,15 @@ int main()
 		cout << "\n [System] You defeated the Goblin!\n";
 		cout << " [System] Press [Enter] to claim your rewards...";
 		cin.get();
-		player.PrintLevel();
 
 		// 여기서 전역 변수 gameInventory 등을 사용할 수 있습니다.
 		cout << "\n [ LOOT WINDOW ]\n";
+		
 		cout << " --------------------------------------------\n";
 		srand((unsigned int)time(NULL));
-
-		int* invPtr = gameInventory; //invPtr -> gameInventory 시작주소 [0]
-
-		for (int i = 1; i <= 3; i++) {
-			*invPtr = rand() % 4 + 1;
-			invPtr++;
-		}
-
-		invPtr = gameInventory;// 처음으로 리셋
-		int slot = 0;
-
-		/*for (int i = 1; i <= 3; i++) {
-			int lootRoll = rand() % 4;
-			string itemName;
-
-			if (lootRoll == 0) itemName = "Gold Pouch";
-			else if (lootRoll == 1) itemName = "Healing Potion";
-			else if (lootRoll == 2) itemName = "Steel Sword";
-			else itemName = "Leather Armor";
-
-			cout << "  * Slot [" << i << "]: " << itemName << " found!\n";
-		}*/
-		while (invPtr < gameInventory + 5) {
-			string itemName;
-			if (*invPtr == 1) itemName = "Gold";
-			else if (*invPtr == 2) itemName = "Healing Potion";
-			else if (*invPtr == 3) itemName = "Weapon";
-			else if (*invPtr == 4) itemName = "Armor";
-			else itemName = "None";
-			//cout << " > Slot "<< slot << setw(46) << "[" << itemName<<"]\n";
-			cout << " > Slot " << slot << "[" << itemName << "]\n";
-			invPtr++;
-			slot++;
-		}
-		cout << " --------------------------------------------\n";
-		cout << " [System] Adventure complete. Press [Enter] to exit.";
-		cin.get();
+		
+		// 아이템 루팅
+		player.Loot();
+		player.PrintLevel();
 	}
 }

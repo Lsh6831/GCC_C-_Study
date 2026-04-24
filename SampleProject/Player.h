@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 #include "Character.h"
 using namespace std;
@@ -21,7 +22,7 @@ class Player : public  Character
 	
 	
 	// 이벤토리
-	int inventory[5];
+	vector<int> inventory;
 
 	public:
 		Player(const string name, const string& characterClass,bool isHardcore);// 외부 입력을 통한 값 초기화
@@ -33,7 +34,6 @@ class Player : public  Character
 	bool GetisHardcore() const{return isHardcore;}
 	int GetExp() const{return exp;}
 	int GetExptoNextLevel() const{return exptoNextLevel;}	
-	int*GetInventory(){return inventory;}
 	
 	// 기능 (함수)
 	int CriticalAttack() const;
@@ -41,5 +41,7 @@ class Player : public  Character
 	void GainExp(int amoudnt);
 	void PreviewCritical() const;
 	void PrintLevel() const;
+	void Loot(int count =3); // 빈 슬롯부터 count개의 아이템 획득 -> 인벤토리에 저장 +출력
+	
 	
 };
