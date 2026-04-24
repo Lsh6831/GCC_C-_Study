@@ -241,102 +241,104 @@ int main()
 	cout << " \\=======================================================/\n";
 
 	//기본 전투 시작 (고블린 등장)
-	int action;
-	Monster goblin(50,10);
-	
-	cout << "\n\n      _---_\n";
-	cout << "     /     \\\n";
-	cout << "    | () () |\n";
-	cout << "     \\  ^  /\n";
-	cout << "      |||||\n";
-	cout << "      |||||\n";
-	cout << " [System] You encountered a GOBLIN!\n";
-
-	// --- 시각적 HP 바 출력 함수 대체 로직 ---
-	auto printHPBar = [](string name, int current, int max) {
-		int barWidth = 20;
-		float ratio = (float)current / max;
-		int pos = barWidth * ratio;
-
-		cout << " " << name << " [";
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos) cout << "=";
-			else if (i == pos) cout << ">";
-			else cout << " ";
-		}
-		cout << "] " << current << " / " << max << "\n";
-	};
-
-	while (goblin.isAlive() > 0 && player.isAlive() > 0)
+	int pandingExp =0;
 	{
-		system("cls");
-		// 스테이터스 상단 유지
-		cout << " /================== CHARACTER STATUS ===================\\\n";
-		cout << " |  Class    : " << charactorClass << "\t\t Level : " << player.getLevel() << "\t |\n";
-		cout << " |  HP       : " << player.getHP() << "\t\t MP    : " << player.getMP() << "\t |\n";
-		cout << " \\=======================================================/\n\n";
-
-		cout << "      _---_\n";
+		
+	//생성자 호출
+		Monster goblin(50,0,15,0,100);
+	
+		int action;
+	
+		cout << "\n\n      _---_\n";
 		cout << "     /     \\\n";
-		cout << "    | () () |   <--- [ GOBLIN ]\n";
+		cout << "    | () () |\n";
 		cout << "     \\  ^  /\n";
-		cout << "      |||||\n\n";
+		cout << "      |||||\n";
+		cout << "      |||||\n";
+		cout << " [System] You encountered a GOBLIN!\n";
 
-		// 시각적 체력바 출력
-		printHPBar("GOBLIN", goblin.GetMaxHp(), 30);
-		printHPBar("PLAYER", player.getHP(), 100);
+		// --- 시각적 HP 바 출력 함수 대체 로직 ---
+		auto printHPBar = [](string name, int current, int max) {
+			int barWidth = 20;
+			float ratio = (float)current / max;
+			int pos = barWidth * ratio;
 
-		cout << "\n +---------------- COMMANDS ----------------+\n";
-		cout << " |  1. Physical Attack                      |\n";
-		cout << " |  2. Critical Attack                       |\n";
-		cout << " +------------------------------------------+\n";
-		cout << " Select Action : ";
-		cin >> action;
+			cout << " " << name << " [";
+			for (int i = 0; i < barWidth; ++i) {
+				if (i < pos) cout << "=";
+				else if (i == pos) cout << ">";
+				else cout << " ";
+			}
+			cout << "] " << current << " / " << max << "\n";
+		};
+		while (goblin.isAlive() > 0 && player.isAlive() > 0)
+		{
+			system("cls");
+			// 스테이터스 상단 유지
+			cout << " /================== CHARACTER STATUS ===================\\\n";
+			cout << " |  Class    : " << charactorClass << "\t\t Level : " << player.getLevel() << "\t |\n";
+			cout << " |  HP       : " << player.getHP() << "\t\t MP    : " << player.getMP() << "\t |\n";
+			cout << " \\=======================================================/\n\n";
 
-		cout << "\n [ Battle Log ]\n";
-		cout << " --------------------------------------------\n";
-		if (action == 1)
-		{	
-			goblin.TakeDamage(player.Attack()); // 객체 스스로가 데미지를 처리하고 있음
-			cout << " => You swung your weapon! [ -" << player.Attack() << " Damage ]\n";
+			cout << "      _---_\n";
+			cout << "     /     \\\n";
+			cout << "    | () () |   <--- [ GOBLIN ]\n";
+			cout << "     \\  ^  /\n";
+			cout << "      |||||\n\n";
 
-			if (goblin.isAlive())
+			// 시각적 체력바 출력
+			printHPBar("GOBLIN", goblin.getHP(), 30);
+			printHPBar("PLAYER", player.getHP(), 100);
+
+			cout << "\n +---------------- COMMANDS ----------------+\n";
+			cout << " |  1. Physical Attack                      |\n";
+			cout << " |  2. Critical Attack                       |\n";
+			cout << " +------------------------------------------+\n";
+			cout << " Select Action : ";
+			cin >> action;
+
+			cout << "\n [ Battle Log ]\n";
+			cout << " --------------------------------------------\n";
+			if (action == 1)
+			{	
+				goblin.TakeDamage(player.Attack()); // 객체 스스로가 데미지를 처리하고 있음
+				cout << " => You swung your weapon! [ -" << player.Attack() << " Damage ]\n";
+
+				if (goblin.isAlive())
+				{
+					player.TakeDamage(goblin.Attack());
+					cout << " => The Goblin counterattacks! [ -30 Damage ]\n";
+				}
+			}
+			else if (action == 2)
 			{
-				player.TakeDamage(goblin.Attack());
-				cout << " => The Goblin counterattacks! [ -30 Damage ]\n";
-			}
-		}
-		else if (action == 2)
-		{
-			goblin.TakeDamage(player.CriticalAttack());
-			cout << "\n>> [YOU] Critical Hit! " << player.CriticalAttack() << " damage!\n";
+				goblin.TakeDamage(player.CriticalAttack());
+				cout << "\n>> [YOU] Critical Hit! " << player.CriticalAttack() << " damage!\n";
 
-			if (goblin.isAlive()) {
-				cout << ">> [GOBLIN] counter-attacked! You lost 30 HP.\n";
-				player.TakeDamage(goblin.Attack());
+				if (goblin.isAlive()) {
+					cout << ">> [GOBLIN] counter-attacked! You lost 30 HP.\n";
+					player.TakeDamage(goblin.Attack());
+				}
 			}
-		}
-		else
-		{
-			cout << " => You panicked! The Goblin seized the opening!\n";
+			else
+			{
+				cout << " => You panicked! The Goblin seized the opening!\n";
 				player.TakeDamage(goblin.Attack());
 			
+			}
 		}
-		cout << " --------------------------------------------\n";
-		cout << " Press [Enter] for next turn...";
-		cin.ignore(1000, '\n');
-		cin.get();
 	}
-
+	pandingExp = goblin.GetExpReward();
 	// 레벨업
-	player.LevelUp();
+	player.GainExp(pandingExp);
 	player.PrintLevel();
-
+	
 	// 전투 종료 및 엔딩 호출
 	bool isVictory = player.isAlive();
 	system("cls"); // 엔딩 페이지를 위해 화면 정리
 
 	if (!isVictory) {
+		
 		cout << "  __      ______  _    _   _____ _____ ______ _____  \n";
 		cout << "  \\ \\   / / __ \\| |  | | |  __ \\_   _|  ____|  __ \\ \n";
 		cout << "   \\ \\_/ / |  | | |  | | | |  | || | | |__  | |  | |\n";
