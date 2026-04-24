@@ -1,13 +1,11 @@
-	#include <iostream>
+#include <iostream>
 #include <String>
-#include <cstdlib>
 #include <ctime>
 #include <windows.h>
-
+#include  <vector>
 #include "Battle.h"
 #include "Monster.h"
 #include "Player.h"
-
 
 using namespace std;
 
@@ -24,11 +22,6 @@ void PreviewCritical(float attackDamage)
 void ApplyCriticalDamage(int& goblinHp, float attackDamage) {
 	int critDamage = attackDamage * 2;	// 치명타는 2배 데미지 적용
 	goblinHp -= critDamage;	// 원본 goblinHp를 직접 감소
-
-
-	// Call By Address: 주소 전달 -> 원본 직접 수정 가능
-	//void LevelUp(int* level) {
-	//	(*level)++;	// 역참조로 level 원본 직접 증가
 	}
 
 // Call By Reference: 참조자 전달 -> * 없이 직접 수정
@@ -41,12 +34,6 @@ void PrintLevel(const int& level) {
 	cout << "현재 레벨: " << level << "\n";
 	//level++; // 컴파일 오류발생, const라 원본의 수정이 불가능함
 }
-
-
-
-
-
-
 
 int main()
 {
@@ -188,22 +175,26 @@ int main()
 
 	//기본 전투 시작 (고블린 등장)
 	int pandingExp =0;
+	vector<Monster> monsters= 
 	{
+		Monster("Goblin",50,0,1,0,50),
+		Monster("Skeloton",60,0,2,0,70),
+		Monster("Wraith",50,0,3,0,80),
+		Monster("Ghoul",70,0,4,0,120),
+		Monster("Andariel",200,0,8,0,500),
+	};
+	for (Monster& monster : monsters)
+	{
+		if (!player.isAlive()) break; 	
 		
 	//생성자 호출
-		Monster goblin(50,0,15,0,100);
-	
-		
-		cout << "\n\n      _---_\n";
-		cout << "     /     \\\n";
-		cout << "    | () () |\n";
-		cout << "     \\  ^  /\n";
-		cout << "      |||||\n";
-		cout << "      |||||\n";
-		cout << " [System] You encountered a GOBLIN!\n";
+			
+		cout <<"====================================\n";
+		cout << " [System] "+monster.GetName()+"\n";
+		cout <<"====================================\n";
 		
 		// 전투 가능 클래스 구현
-		Battle battle(player,goblin);
+		Battle battle(player,monster);
 		battle.Run();
 
 		// --- 시각적 HP 바 출력 함수 대체 로직 ---
@@ -221,48 +212,48 @@ int main()
 			}
 			cout << "] " << current << " / " << max << "\n";
 		};
-		pandingExp = goblin.GetExpReward();
-	}
-	// 레벨업
-	player.GainExp(pandingExp);
-	player.PrintLevel();
-	
-	// 전투 종료 및 엔딩 호출
-	bool isVictory = player.isAlive();
-	system("cls"); // 엔딩 페이지를 위해 화면 정리
-
-	if (!isVictory) {
-		
-		cout << "  __      ______  _    _   _____ _____ ______ _____  \n";
-		cout << "  \\ \\   / / __ \\| |  | | |  __ \\_   _|  ____|  __ \\ \n";
-		cout << "   \\ \\_/ / |  | | |  | | | |  | || | | |__  | |  | |\n";
-		cout << "    \\   /| |  | | |  | | | |  | || | |  __| | |  | |\n";
-		cout << "     | | | |__| | |__| | | |__| || |_| |____| |__| |\n";
-		cout << "     |_|  \\____/ \\____/  |_____/_____|______|_____/ \n";
-		cout << "\n [System] You died...\n";
-		if (isHardcore) {
-			cout << " [System] Hardcore Mode: Your character has been deleted forever.\n";
-		}
-	}
-	else {
-		cout << "  __       _______ _____ _______  ____  _______     __ \n";
-		cout << "  \\ \\    / /_   _/ ____|__   __|/ __ \\|  __ \\ \\   / / \n";
-		cout << "   \\ \\  / /   | || |       | |  | |  | | |__) \\ \\_/ /  \n";
-		cout << "    \\ \\/ /    | || |       | |  | |  | |  _  / \\   /   \n";
-		cout << "     \\  /    _| || |____   | |  | |__| | | \\ \\  | |    \n";
-		cout << "      \\/    |_____\\_____|  |_|   \\____/|_|  \\_\\ |_|    \n";
-		cout << "\n [System] You defeated the Goblin!\n";
-		cout << " [System] Press [Enter] to claim your rewards...";
-		cin.get();
-
-		// 여기서 전역 변수 gameInventory 등을 사용할 수 있습니다.
-		cout << "\n [ LOOT WINDOW ]\n";
-		
-		cout << " --------------------------------------------\n";
-		srand((unsigned int)time(NULL));
-		
-		// 아이템 루팅
-		player.Loot();
+		pandingExp = monster.GetExpReward();
+		// 레벨업
+		player.GainExp(pandingExp);
 		player.PrintLevel();
+		
+		// 전투 종료 및 엔딩 호출
+		bool isVictory = player.isAlive();
+		system("cls"); // 엔딩 페이지를 위해 화면 정리
+
+		if (!isVictory) {
+		
+			cout << "  __      ______  _    _   _____ _____ ______ _____  \n";
+			cout << "  \\ \\   / / __ \\| |  | | |  __ \\_   _|  ____|  __ \\ \n";
+			cout << "   \\ \\_/ / |  | | |  | | | |  | || | | |__  | |  | |\n";
+			cout << "    \\   /| |  | | |  | | | |  | || | |  __| | |  | |\n";
+			cout << "     | | | |__| | |__| | | |__| || |_| |____| |__| |\n";
+			cout << "     |_|  \\____/ \\____/  |_____/_____|______|_____/ \n";
+			cout << "\n [System] You died...\n";
+			if (isHardcore) {
+				cout << " [System] Hardcore Mode: Your character has been deleted forever.\n";
+			}
+		}
+		else {
+			cout << "  __       _______ _____ _______  ____  _______     __ \n";
+			cout << "  \\ \\    / /_   _/ ____|__   __|/ __ \\|  __ \\ \\   / / \n";
+			cout << "   \\ \\  / /   | || |       | |  | |  | | |__) \\ \\_/ /  \n";
+			cout << "    \\ \\/ /    | || |       | |  | |  | |  _  / \\   /   \n";
+			cout << "     \\  /    _| || |____   | |  | |__| | | \\ \\  | |    \n";
+			cout << "      \\/    |_____\\_____|  |_|   \\____/|_|  \\_\\ |_|    \n";
+			cout << "\n [System] You defeated the Goblin!\n";
+			cout << " [System] Press [Enter] to claim your rewards...";
+			cin.get();
+
+			// 여기서 전역 변수 gameInventory 등을 사용할 수 있습니다.
+			cout << "\n [ LOOT WINDOW ]\n";
+		
+			cout << " --------------------------------------------\n";
+			srand((unsigned int)time(NULL));
+		
+			// 아이템 루팅
+			player.Loot();
+			player.PrintLevel();
+		}
 	}
 }

@@ -35,7 +35,7 @@ void Player:: PrintLevel() const
 	
 int Player:: CriticalAttack() const
 {
-    return (int)(attackDamage*2);
+    return (int)(attackDamage*10);
 }
 
 void Player::GainExp(int amoudnt)
