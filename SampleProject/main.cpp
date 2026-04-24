@@ -248,7 +248,7 @@ int main()
 		Monster goblin(50,0,15,0,100);
 	
 		int action;
-	
+	    int a?;
 		cout << "\n\n      _---_\n";
 		cout << "     /     \\\n";
 		cout << "    | () () |\n";
