@@ -3,6 +3,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <windows.h>
+#include "Monster.h"
+#include "Player.h"
+
 
 using namespace std;
 
@@ -37,126 +40,10 @@ void PrintLevel(const int& level) {
 	//level++; // 컴파일 오류발생, const라 원본의 수정이 불가능함
 }
 
-//Player 클래스
-class Player
-{
-	private:
-	//기본 정보	
-	string name;
-	string characterClass;
-	bool isHardcore;
-	
-	//기본 늘력치
-	int strength,dexterity,vitality,energy;
-	
-	// 파생 능력치
-	int level;
-	int hp,maxhp;
-	int mp,maxmp;
-	float attackDamage;
-	float attackSpeed;
-	double movingSpeed;
-	
-	// 저항 능력치
-	int fireResist,coldResist,lightResist,poisonResist;
-	
-	// 이벤토리
-	int inventory[5];
-
-	public:
-		Player(const string name, const string& characterClass,bool isHardcore)// 외부 입력을 통한 값 초기화
-			: name(name), characterClass(characterClass), isHardcore(isHardcore),
-	strength(50), dexterity(50), vitality(50), energy(50),
-	level(1),
-	fireResist(0), coldResist(0), lightResist(0), poisonResist(0)
-		{
-			maxhp = vitality *2 ;//계산이 필요한 값 세팅
-			hp = maxhp;
-			maxmp = (int)energy *1.5f ;
-			mp = maxmp;
-			attackDamage = strength*0.2f;
-			attackSpeed = dexterity / 10.0f;
-			movingSpeed = movingSpeed / 30.f;
-			
-			for (int i = 0; i < 5; i++) inventory[i] = 0;
-		}
-	
-	// Getters
-	string GetName() const{return name;}
-	string GetCharacterClass() const{return characterClass;}
-	bool GetisHardcore() const{return isHardcore;}
-	int getStrength() const{return strength;}
-	int getDexterity() const{return dexterity;}
-	int getVitality() const{return vitality;}
-	int getEnergy() const{return energy;}
-	int getLevel() const{return level;}
-	int getHP() const{return hp;}
-	int getMaxHP() const{return maxhp;}
-	int getMP() const{return maxmp;}
-	int getMaxMP() const{return maxmp;}
-	int getfireResist() const{return fireResist;}
-	int getColdResist() const{return coldResist;}
-	int getLightResist() const{return lightResist;}
-	int getPoisonResist() const{return poisonResist;}
-	float getattackDamage() const{return attackDamage;}
-	float getattackspeed() const{return attackSpeed;}
-	float getMovingspeed() const{return movingSpeed;}
-	
-	
-	int*GetInventory(){return inventory;}
-	
-	// 기능 (함수)
-	bool isAlive() const{return hp>0;}
-	void TakeDamage(int damage)
-		{
-			hp -= damage;
-			if (hp<=0) hp = 0;
-		}
-	int Attack() const{return (int)attackDamage;}
-	int CriticalAttack() const{return (int)(attackDamage*2);}
-	void LevelUp() {level++;}
-	
-	void PreviewCritical() const
-		{
-			float preview = attackDamage*2;
-			cout << "크리티컬 예상 데미지 : "<<preview<<"\n";
-			
-		}
-	void PrintLevel() const
-		{
-			cout <<"현재레밸"<<level<<"\n";
-		}
-	
-};
 
 
-// Monset 클래스
-class Monster
-{
-	private:
-	
-	int hp,maxhp;
-	int attackDamage;
-	
-	public:
-		Monster(int inithp,int atk) : hp(inithp), maxhp(inithp),attackDamage(atk)
-		{
-			cout << "[몬스터 등장!] HP : " << hp << "/ ATK :"<<attackDamage<< "\n";
-		}
-	~Monster()
-		{
-			cout << "[몬스터 소멸!] \n"; // 소멸자 확인용 로그
-		}
-	int GetHp() const{return hp;}
-	int GetMaxHp() const{return maxhp;}
-	bool isAlive() const{return hp>0;}
-	void TakeDamage(int damage)
-		{
-			hp -= damage;
-			if (hp<0) hp = 0;
-		}
-	int Attack() const{return attackDamage;} // 몬스터가 플레이어를 공격
-};
+
+
 
 // --- 엔딩 장면 출력 함수 ---
 void ShowEnding(bool isVictory, bool isHardcore) {
