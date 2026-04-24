@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <windows.h>
+
+#include "Battle.h"
 #include "Monster.h"
 #include "Player.h"
 
@@ -247,8 +249,7 @@ int main()
 	//생성자 호출
 		Monster goblin(50,0,15,0,100);
 	
-		int action;
-	    int a?;
+		
 		cout << "\n\n      _---_\n";
 		cout << "     /     \\\n";
 		cout << "    | () () |\n";
@@ -256,6 +257,10 @@ int main()
 		cout << "      |||||\n";
 		cout << "      |||||\n";
 		cout << " [System] You encountered a GOBLIN!\n";
+		
+		// 전투 가능 클래스 구현
+		Battle battle(player,goblin);
+		battle.Run();
 
 		// --- 시각적 HP 바 출력 함수 대체 로직 ---
 		auto printHPBar = [](string name, int current, int max) {
@@ -271,64 +276,8 @@ int main()
 			}
 			cout << "] " << current << " / " << max << "\n";
 		};
-		while (goblin.isAlive() > 0 && player.isAlive() > 0)
-		{
-			system("cls");
-			// 스테이터스 상단 유지
-			cout << " /================== CHARACTER STATUS ===================\\\n";
-			cout << " |  Class    : " << charactorClass << "\t\t Level : " << player.getLevel() << "\t |\n";
-			cout << " |  HP       : " << player.getHP() << "\t\t MP    : " << player.getMP() << "\t |\n";
-			cout << " \\=======================================================/\n\n";
-
-			cout << "      _---_\n";
-			cout << "     /     \\\n";
-			cout << "    | () () |   <--- [ GOBLIN ]\n";
-			cout << "     \\  ^  /\n";
-			cout << "      |||||\n\n";
-
-			// 시각적 체력바 출력
-			printHPBar("GOBLIN", goblin.getHP(), 30);
-			printHPBar("PLAYER", player.getHP(), 100);
-
-			cout << "\n +---------------- COMMANDS ----------------+\n";
-			cout << " |  1. Physical Attack                      |\n";
-			cout << " |  2. Critical Attack                       |\n";
-			cout << " +------------------------------------------+\n";
-			cout << " Select Action : ";
-			cin >> action;
-
-			cout << "\n [ Battle Log ]\n";
-			cout << " --------------------------------------------\n";
-			if (action == 1)
-			{	
-				goblin.TakeDamage(player.Attack()); // 객체 스스로가 데미지를 처리하고 있음
-				cout << " => You swung your weapon! [ -" << player.Attack() << " Damage ]\n";
-
-				if (goblin.isAlive())
-				{
-					player.TakeDamage(goblin.Attack());
-					cout << " => The Goblin counterattacks! [ -30 Damage ]\n";
-				}
-			}
-			else if (action == 2)
-			{
-				goblin.TakeDamage(player.CriticalAttack());
-				cout << "\n>> [YOU] Critical Hit! " << player.CriticalAttack() << " damage!\n";
-
-				if (goblin.isAlive()) {
-					cout << ">> [GOBLIN] counter-attacked! You lost 30 HP.\n";
-					player.TakeDamage(goblin.Attack());
-				}
-			}
-			else
-			{
-				cout << " => You panicked! The Goblin seized the opening!\n";
-				player.TakeDamage(goblin.Attack());
-			
-			}
-		}
+		pandingExp = goblin.GetExpReward();
 	}
-	pandingExp = goblin.GetExpReward();
 	// 레벨업
 	player.GainExp(pandingExp);
 	player.PrintLevel();
@@ -360,6 +309,7 @@ int main()
 		cout << "\n [System] You defeated the Goblin!\n";
 		cout << " [System] Press [Enter] to claim your rewards...";
 		cin.get();
+		player.PrintLevel();
 
 		// 여기서 전역 변수 gameInventory 등을 사용할 수 있습니다.
 		cout << "\n [ LOOT WINDOW ]\n";
