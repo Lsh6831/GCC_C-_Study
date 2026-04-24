@@ -91,3 +91,4 @@ bool Battle::Run()
     }
     return player.isAlive();
 }
+
