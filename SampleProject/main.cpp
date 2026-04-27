@@ -3,10 +3,15 @@
 #include <ctime>
 #include <windows.h>
 #include  <vector>
+
+#include "Barbarian.h"
+#include "Sorceress.h"
 #include "Battle.h"
 #include "FireGoblin.h"
 #include "Monster.h"
 #include "Player.h"
+#include "Barbarian.h"
+#include "Sorceress.h"
 
 
 using namespace std;
@@ -128,7 +133,14 @@ int main()
 	cout << "       \\/       \\/          \\/            \\/     \\/   \n";
 	cout << "::::::::::::::::::::: TO SANCTUARY :::::::::::::::::::::\n\n";	
 	// Player 객체 생성 - 입력받은 값들로 초기화, 스탯은 내부에서 자동 계산됨
-	Player player(userName, charactorClass, hardcoreInput);
+	// Player 직업에 따라 자식클래스 생성
+	Player*playerPtr = nullptr;
+	if (classChoiceInput==3) playerPtr = new Barbarian(userName,isHardcore);
+	else if (classChoiceInput==7) playerPtr =new Sorceress(userName,isHardcore);
+	
+	else playerPtr = new Player(userName,charactorClass,isHardcore);
+	Player&player=*playerPtr;
+	
 	
 	
 	
@@ -194,7 +206,7 @@ int main()
 	//생성자 호출
 			
 		cout <<"====================================\n";
-		cout << " [System] "+monster->GetName()+"\n";
+		cout << " [System] "+monster->GetName()+	"\n";
 		cout <<"====================================\n";
 		
 		// 전투 가능 클래스 구현
@@ -261,7 +273,7 @@ int main()
 		{
 			delete monster;
 		}
-		
+		delete playerPtr;
 		// 아이템 루팅
 		player.Loot();
 		player.PrintLevel();

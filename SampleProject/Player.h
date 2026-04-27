@@ -25,8 +25,15 @@ class Player : public  Character
 	vector<int> inventory;
 
 	public:
-		Player(const string name, const string& characterClass,bool isHardcore);// 외부 입력을 통한 값 초기화
+	// 외부 입력을 통한 값 초기화
+		Player(const string name, const string& characterClass,bool isHardcore);
 			
+protected:
+	// 자식 클랙스(바바리안,소서러스 등) 이 스태을 직접 지정할떄 사용되는 생성자 
+	Player(const string& name, const string& characterClass,bool isHardcore,
+		int str, int dex, int vit, int eng);
+	
+public:
 	
 	// Getters
 	string GetName() const{return name;}
@@ -37,6 +44,7 @@ class Player : public  Character
 	
 	// 기능 (함수)
 	int CriticalAttack() const;
+	virtual  string GetAttackMessage() const  {return "[Fire Enhanced Attack]";}
 	void LevelUp() ;
 	void GainExp(int amoudnt);
 	void PreviewCritical() const;

@@ -17,7 +17,9 @@ exp(0), exptoNextLevel(100)//단순 값 세팅 초기화
     movingSpeed = movingSpeed / 30.f;
 }
 
-
+Player::Player(const string& name, const string& characterClass, bool isHardcore, 
+    int str, int dex, int vit, int eng)
+        : Character(str,dex,vit,eng,1),exp(0),exptoNextLevel(100){}
 void Player::LevelUp()
 {
     level++;

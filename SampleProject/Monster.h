@@ -12,6 +12,7 @@ private:
 	
 public:
 	Monster(const string& name, int str,int dex,int vit, int eng,int expReward ,int lv= 1);
+	virtual ~Monster();// 소멸자
     
 	string GetName() const{return name;};
     int GetExpReward() const{return expReward;};
