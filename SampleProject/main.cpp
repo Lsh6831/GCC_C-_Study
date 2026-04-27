@@ -181,7 +181,7 @@ int main()
 	vector<Monster*> monsters= 
 	{
 		new Monster("Goblin",50,0,1,0,50),
-		new FireGoblin("Goblin",50,0,1,0,50),
+		new FireGoblin("Goblin",50,0,5,0,50),
 		new Monster("Skeloton",60,0,2,0,70),
 		new Monster("Wraith",50,0,3,0,80),
 		new Monster("Ghoul",70,0,4,0,120),
@@ -256,6 +256,11 @@ int main()
 		
 		cout << " --------------------------------------------\n";
 		srand((unsigned int)time(NULL));
+		
+		for (Monster* monster : monsters)
+		{
+			delete monster;
+		}
 		
 		// 아이템 루팅
 		player.Loot();
