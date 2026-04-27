@@ -4,8 +4,10 @@
 #include <windows.h>
 #include  <vector>
 #include "Battle.h"
+#include "FireGoblin.h"
 #include "Monster.h"
 #include "Player.h"
+
 
 using namespace std;
 
@@ -171,30 +173,32 @@ int main()
 	cout << " |  Lightning: " << player.getLightResist() << "\t\t\t\t\t |\n";
 	cout << " |  Cold     : " << player.getColdResist() << "\t\t\t\t\t |\n";
 	cout << " |  Poison   : " << player.getPoisonResist() << "\t\t\t\t\t |\n";
-	cout << " \\=======================================================/\n";
+	cout << " \\======================"
+		 "=================================/\n";
 
 	//기본 전투 시작 (고블린 등장)
 	int pandingExp =0;
-	vector<Monster> monsters= 
+	vector<Monster*> monsters= 
 	{
-		Monster("Goblin",50,0,1,0,50),
-		Monster("Skeloton",60,0,2,0,70),
-		Monster("Wraith",50,0,3,0,80),
-		Monster("Ghoul",70,0,4,0,120),
-		Monster("Andariel",200,0,8,0,500),
+		new Monster("Goblin",50,0,1,0,50),
+		new FireGoblin("Goblin",50,0,1,0,50),
+		new Monster("Skeloton",60,0,2,0,70),
+		new Monster("Wraith",50,0,3,0,80),
+		new Monster("Ghoul",70,0,4,0,120),
+		new Monster("Andariel",200,0,8,0,500),
 	};
-	for (Monster& monster : monsters)
+	for (Monster*& monster : monsters)
 	{
 		if (!player.isAlive()) break; 	
 		
 	//생성자 호출
 			
 		cout <<"====================================\n";
-		cout << " [System] "+monster.GetName()+"\n";
+		cout << " [System] "+monster->GetName()+"\n";
 		cout <<"====================================\n";
 		
 		// 전투 가능 클래스 구현
-		Battle battle(player,monster);
+		Battle battle(player,*monster);
 		battle.Run();
 
 		// --- 시각적 HP 바 출력 함수 대체 로직 ---
@@ -212,48 +216,49 @@ int main()
 			}
 			cout << "] " << current << " / " << max << "\n";
 		};
-		pandingExp = monster.GetExpReward();
+		pandingExp = monster->GetExpReward();
 		// 레벨업
 		player.GainExp(pandingExp);
 		player.PrintLevel();
 		
-		// 전투 종료 및 엔딩 호출
-		bool isVictory = player.isAlive();
-		system("cls"); // 엔딩 페이지를 위해 화면 정리
-
-		if (!isVictory) {
 		
-			cout << "  __      ______  _    _   _____ _____ ______ _____  \n";
-			cout << "  \\ \\   / / __ \\| |  | | |  __ \\_   _|  ____|  __ \\ \n";
-			cout << "   \\ \\_/ / |  | | |  | | | |  | || | | |__  | |  | |\n";
-			cout << "    \\   /| |  | | |  | | | |  | || | |  __| | |  | |\n";
-			cout << "     | | | |__| | |__| | | |__| || |_| |____| |__| |\n";
-			cout << "     |_|  \\____/ \\____/  |_____/_____|______|_____/ \n";
-			cout << "\n [System] You died...\n";
-			if (isHardcore) {
-				cout << " [System] Hardcore Mode: Your character has been deleted forever.\n";
-			}
+	}
+	
+	// 전투 종료 및 엔딩 호출
+	bool isVictory = player.isAlive();
+	system("cls"); // 엔딩 페이지를 위해 화면 정리
+	if (!isVictory) {
+		
+		cout << "  __      ______  _    _   _____ _____ ______ _____  \n";
+		cout << "  \\ \\   / / __ \\| |  | | |  __ \\_   _|  ____|  __ \\ \n";
+		cout << "   \\ \\_/ / |  | | |  | | | |  | || | | |__  | |  | |\n";
+		cout << "    \\   /| |  | | |  | | | |  | || | |  __| | |  | |\n";
+		cout << "     | | | |__| | |__| | | |__| || |_| |____| |__| |\n";
+		cout << "     |_|  \\____/ \\____/  |_____/_____|______|_____/ \n";
+		cout << "\n [System] You died...\n";
+		if (isHardcore) {
+			cout << " [System] Hardcore Mode: Your character has been deleted forever.\n";
 		}
-		else {
-			cout << "  __       _______ _____ _______  ____  _______     __ \n";
-			cout << "  \\ \\    / /_   _/ ____|__   __|/ __ \\|  __ \\ \\   / / \n";
-			cout << "   \\ \\  / /   | || |       | |  | |  | | |__) \\ \\_/ /  \n";
-			cout << "    \\ \\/ /    | || |       | |  | |  | |  _  / \\   /   \n";
-			cout << "     \\  /    _| || |____   | |  | |__| | | \\ \\  | |    \n";
-			cout << "      \\/    |_____\\_____|  |_|   \\____/|_|  \\_\\ |_|    \n";
-			cout << "\n [System] You defeated the Goblin!\n";
-			cout << " [System] Press [Enter] to claim your rewards...";
-			cin.get();
+	}
+	else {
+		cout << "  __       _______ _____ _______  ____  _______     __ \n";
+		cout << "  \\ \\    / /_   _/ ____|__   __|/ __ \\|  __ \\ \\   / / \n";
+		cout << "   \\ \\  / /   | || |       | |  | |  | | |__) \\ \\_/ /  \n";
+		cout << "    \\ \\/ /    | || |       | |  | |  | |  _  / \\   /   \n";
+		cout << "     \\  /    _| || |____   | |  | |__| | | \\ \\  | |    \n";
+		cout << "      \\/    |_____\\_____|  |_|   \\____/|_|  \\_\\ |_|    \n";
+		cout << "\n [System] You defeated the Goblin!\n";
+		cout << " [System] Press [Enter] to claim your rewards...";
+		cin.get();
 
-			// 여기서 전역 변수 gameInventory 등을 사용할 수 있습니다.
-			cout << "\n [ LOOT WINDOW ]\n";
+		// 여기서 전역 변수 gameInventory 등을 사용할 수 있습니다.
+		cout << "\n [ LOOT WINDOW ]\n";
 		
-			cout << " --------------------------------------------\n";
-			srand((unsigned int)time(NULL));
+		cout << " --------------------------------------------\n";
+		srand((unsigned int)time(NULL));
 		
-			// 아이템 루팅
-			player.Loot();
-			player.PrintLevel();
-		}
+		// 아이템 루팅
+		player.Loot();
+		player.PrintLevel();
 	}
 }

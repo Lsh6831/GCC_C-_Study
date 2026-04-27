@@ -36,7 +36,7 @@ bool Battle::Run()
 
         cout << "      _---_\n";
         cout << "     /     \\\n";
-        cout << "    | () () |   <--- [ GOBLIN ]\n";
+        cout << "    | () () |   <--- "<<monster.GetName()<<"\n";
         cout << "     \\  ^  /\n";
         cout << "      |||||\n\n";
 
