@@ -3,6 +3,7 @@
 #include <ctime>
 #include <windows.h>
 #include  <vector>
+#include  <memory>
 
 #include "Barbarian.h"
 #include "Sorceress.h"
@@ -134,11 +135,12 @@ int main()
 	cout << "::::::::::::::::::::: TO SANCTUARY :::::::::::::::::::::\n\n";	
 	// Player 객체 생성 - 입력받은 값들로 초기화, 스탯은 내부에서 자동 계산됨
 	// Player 직업에 따라 자식클래스 생성
-	Player*playerPtr = nullptr;
-	if (classChoiceInput==3) playerPtr = new Barbarian(userName,isHardcore);
-	else if (classChoiceInput==7) playerPtr =new Sorceress(userName,isHardcore);
 	
-	else playerPtr = new Player(userName,charactorClass,isHardcore);
+	unique_ptr<Player>playerPtr;
+	if (classChoiceInput==3) playerPtr = make_unique<Barbarian>(userName,isHardcore);
+	else if (classChoiceInput==7) playerPtr =make_unique<Sorceress>(userName,isHardcore);
+	
+	else playerPtr = make_unique<Player>(userName,charactorClass,isHardcore);
 	Player&player=*playerPtr;
 	
 	
@@ -190,16 +192,16 @@ int main()
 
 	//기본 전투 시작 (고블린 등장)
 	int pandingExp =0;
-	vector<Monster*> monsters= 
+	vector<unique_ptr<Monster>> monsters; 
 	{
-		new Monster("Goblin",50,0,1,0,50),
-		new FireGoblin("Goblin",50,0,5,0,50),
-		new Monster("Skeloton",60,0,2,0,70),
-		new Monster("Wraith",50,0,3,0,80),
-		new Monster("Ghoul",70,0,4,0,120),
-		new Monster("Andariel",200,0,8,0,500),
+		monsters.push_back(make_unique<Monster>("Goblin",50,0,1,0,50));
+		monsters.push_back(make_unique<FireGoblin>("FireGoblin",50,0,5,0,50));
+		monsters.push_back(make_unique<Monster>("Skeloton",60,0,2,0,70));
+		monsters.push_back(make_unique<Monster>("Wraith",50,0,3,0,80));
+		monsters.push_back(make_unique<Monster>("Ghoul",70,0,4,0,120));
+		monsters.push_back(make_unique<Monster>("Andariel",200,0,8,0,500));
 	};
-	for (Monster*& monster : monsters)
+	for (auto& monster : monsters)
 	{
 		if (!player.isAlive()) break; 	
 		
@@ -269,7 +271,7 @@ int main()
 		cout << " --------------------------------------------\n";
 		srand((unsigned int)time(NULL));
 		
-		for (Monster* monster : monsters)
+		for (auto& monster : monsters)
 		{
 			delete monster;
 		}

@@ -27,6 +27,7 @@ class Player : public  Character
 	public:
 	// 외부 입력을 통한 값 초기화
 		Player(const string name, const string& characterClass,bool isHardcore);
+	~Player();
 			
 protected:
 	// 자식 클랙스(바바리안,소서러스 등) 이 스태을 직접 지정할떄 사용되는 생성자 

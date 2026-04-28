@@ -20,6 +20,11 @@ exp(0), exptoNextLevel(100)//단순 값 세팅 초기화
 Player::Player(const string& name, const string& characterClass, bool isHardcore, 
     int str, int dex, int vit, int eng)
         : Character(str,dex,vit,eng,1),exp(0),exptoNextLevel(100){}
+
+Player::~Player()
+{
+    cout<<"[플레이어 소멸]"<<name << endl;
+}
 void Player::LevelUp()
 {
     level++;
