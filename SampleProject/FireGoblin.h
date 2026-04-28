@@ -9,5 +9,5 @@ public:
     int Attack() const override;
     
     string GetAttackMessage() const override {return "[Fire Enhanced Attack]";}
-    
+    unique_ptr<Item> Drop() const override;
 };
