@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
 #include <vector>
-
+#include "item.h"
 #include "Character.h"
 using namespace std;
-
+#include <memory>
 
 // Character 클래스 상속 받음Player 클래스
 class Player : public  Character
@@ -22,8 +22,7 @@ class Player : public  Character
 	
 	
 	// 이벤토리
-	vector<int> inventory;
-
+	vector<Item> inventory;
 	public:
 	// 외부 입력을 통한 값 초기화
 		Player(const string name, const string& characterClass,bool isHardcore);
@@ -50,7 +49,8 @@ public:
 	void GainExp(int amoudnt);
 	void PreviewCritical() const;
 	void PrintLevel() const;
-	void Loot(int count =3); // 빈 슬롯부터 count개의 아이템 획득 -> 인벤토리에 저장 +출력
+	void Loot(unique_ptr<Item> item); // 소유권 이전을 통한 아이템 획득
+	void PrintInventory() const; // 인벤토리 전체 출력
 	
 	
 };

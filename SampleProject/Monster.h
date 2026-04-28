@@ -1,6 +1,8 @@
 #pragma once
 #include "Character.h"
 #include  <string>
+#include <memory>
+#include "Item.h"
 using namespace std;
 
 
@@ -17,5 +19,7 @@ public:
 	string GetName() const{return name;};
     int GetExpReward() const{return expReward;};
 	
-	virtual string GetAttackMessage() const{return "";};
+	virtual string GetAttackMessage() const{return "";}
+	
+	virtual unique_ptr<Item> Drop() const;// 몬스터 처치 시 아이템이 드롭
 };
