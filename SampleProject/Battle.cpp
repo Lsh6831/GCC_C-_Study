@@ -5,7 +5,7 @@
 
 #include "Mercenary.h"
 
-Battle::Battle(Player& player, Monster& monster)
+Battle::Battle(Player& player, Monster& monster,shared_ptr<Mercenary> mercenary)
     :player(player), monster(monster),mercenary(mercenary), ncombatMessage("[System] Battle Started") {}
 
 void Battle::printHPBar(string name, int current, int max)
