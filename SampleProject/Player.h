@@ -6,6 +6,8 @@
 using namespace std;
 #include <memory>
 
+class Mercenary;//전방선언
+
 // Character 클래스 상속 받음Player 클래스
 class Player : public  Character
 {
@@ -37,11 +39,13 @@ public:
 	
 	// Getters
 	string GetName() const{return name;}
-	string GetCharacterClass() const{return characterClass;}
+	string GetCharacterClass() const{return characterClass;}	
 	bool GetisHardcore() const{return isHardcore;}
 	int GetExp() const{return exp;}
 	int GetExptoNextLevel() const{return exptoNextLevel;}	
 	
+	// 플레이어->용병 참조
+	shared_ptr<Mercenary> companion;
 	// 기능 (함수)
 	int CriticalAttack() const;
 	virtual  string GetAttackMessage() const  {return "[Fire Enhanced Attack]";}

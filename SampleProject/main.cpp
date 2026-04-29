@@ -11,8 +11,7 @@
 #include "FireGoblin.h"
 #include "Monster.h"
 #include "Player.h"
-#include "Barbarian.h"
-#include "Sorceress.h"
+#include "Mercenary.h"
 
 
 using namespace std;
@@ -136,11 +135,11 @@ int main()
 	// Player 객체 생성 - 입력받은 값들로 초기화, 스탯은 내부에서 자동 계산됨
 	// Player 직업에 따라 자식클래스 생성
 	
-	unique_ptr<Player>playerPtr;
-	if (classChoiceInput==3) playerPtr = make_unique<Barbarian>(userName,isHardcore);
-	else if (classChoiceInput==7) playerPtr =make_unique<Sorceress>(userName,isHardcore);
+	shared_ptr<Player>playerPtr;
+	if (classChoiceInput==3) playerPtr = make_shared <Barbarian>(userName,isHardcore);
+	else if (classChoiceInput==7) playerPtr = make_shared <Sorceress>(userName,isHardcore);
 	
-	else playerPtr = make_unique<Player>(userName,charactorClass,isHardcore);
+	else playerPtr = make_shared<Player>(userName,charactorClass,isHardcore);
 	Player&player=*playerPtr;
 	
 	
@@ -169,7 +168,12 @@ int main()
 	cin.get(); // 스테이터스 확인 후 대기
 
 	system("cls"); // 화면 지우기
+	
+	shared_ptr<Mercenary> mercenary = make_shared <Mercenary>("Rogue",12,playerPtr);
+	player.companion=mercenary;//player->Mercenery 연결(순환참조)
+	cout << "[use_count] playerPtr 참조 수 :"<<playerPtr.use_count()<<endl; 
 
+	cout << "[use_count] mercenary 참조 수 :"<<mercenary.use_count()<<endl;
 	// 스테이터스 상단 유지
 	cout << " /================== CHARACTER STATUS ===================\\\n";
 	cout << " |                                                       |\n";
@@ -212,7 +216,7 @@ int main()
 		cout <<"====================================\n";
 		
 		// 전투 가능 클래스 구현
-		Battle battle(player,*monster);
+		Battle battle(player,*monster,mercenary);
 		battle.Run();
 
 		// --- 시각적 HP 바 출력 함수 대체 로직 ---

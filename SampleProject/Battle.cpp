@@ -3,8 +3,10 @@
 #include  <cstdlib>
 #include <iomanip>
 
+#include "Mercenary.h"
+
 Battle::Battle(Player& player, Monster& monster)
-    :player(player), monster(monster), ncombatMessage("[System] Battle Started") {}
+    :player(player), monster(monster),mercenary(mercenary), ncombatMessage("[System] Battle Started") {}
 
 void Battle::printHPBar(string name, int current, int max)
 {
@@ -58,6 +60,12 @@ bool Battle::Run()
             int damage = player.Attack();
             monster.TakeDamage(damage);
             cout << " => You swung your weapon! [ -" << damage << " Damage ]\n";
+            if (mercenary&& monster.isAlive())
+            {
+                int mercDmg =mercenary->Attack();
+                monster.TakeDamage(mercDmg);
+                ncombatMessage += "\n=> ["+mercenary->name+"attacked! (Dmg: " +to_string(player.Attack())+")";
+            }
 
             if (monster.isAlive())
             {
@@ -71,6 +79,12 @@ bool Battle::Run()
             int damage = player.CriticalAttack();
             monster.TakeDamage(damage);
             cout << "\n>> [YOU] Critical Hit! " << damage << " damage!\n";
+            if (mercenary&& monster.isAlive())
+            {
+                int mercDmg =mercenary->Attack();
+                monster.TakeDamage(mercDmg);
+                ncombatMessage += "\n=> ["+mercenary->name+"attacked! (Dmg: " +to_string(player.Attack())+")";
+            }
 
             if (monster.isAlive()) {
                 int mDamage = monster.Attack();

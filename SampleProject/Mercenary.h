@@ -1,0 +1,23 @@
+#pragma once
+#include <String>
+#include <iostream>
+
+#include "Player.h"
+using namespace std;
+
+
+class Mercenary
+{
+public:
+    string name;
+    int attackDamage;
+    shared_ptr<Player> owner;
+    
+    
+    Mercenary(const string& name,int atk,shared_ptr<Player> owner);
+    ~Mercenary();
+    
+    int Attack() const {return attackDamage;};
+    bool IsOwnerAlive()const{return owner != nullptr;};// 주인이살아 있는지 확인
+    
+};
