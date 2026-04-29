@@ -30,8 +30,8 @@ bool Battle::Run()
     // lock() : weak_ptr에서 임시로 shared_ptr을통해 데이터 접근
     if (mercenary)
     {
-        auto ownerPtr =mercenary->owner;
-        if (owerPtr)
+        auto ownerPtr =mercenary->owner.lock();
+        if (ownerPtr)
         {
             cout<<"["<<mercenary->name<<"]"<<ownerPtr->GetName()<<"님을 위해 싸우겠습니다.\n"
         }
