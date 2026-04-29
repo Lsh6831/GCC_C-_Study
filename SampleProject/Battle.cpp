@@ -33,7 +33,7 @@ bool Battle::Run()
         auto ownerPtr =mercenary->owner.lock();
         if (ownerPtr)
         {
-            cout<<"["<<mercenary->name<<"]"<<ownerPtr->GetName()<<"님을 위해 싸우겠습니다.\n"
+            cout<<"["<<mercenary->name<<"]"<<ownerPtr->GetName()<<"님을 위해 싸우겠습니다.\n";
         }
     }
 
@@ -59,6 +59,7 @@ bool Battle::Run()
         cout << "\n +---------------- COMMANDS ----------------+\n";
         cout << " |  1. Physical Attack                      |\n";
         cout << " |  2. Critical Attack                       |\n";
+        cout << " |  3. Healing Posion                       |\n";
         cout << " +------------------------------------------+\n";
         cout << " Select Action : ";
         cin >> action;
@@ -100,6 +101,17 @@ bool Battle::Run()
                 int mDamage = monster.Attack();
                 player.TakeDamage(mDamage);
                 cout << ">> [GOBLIN] counter-attacked! You lost " << mDamage << " HP.\n";
+            }
+        }
+        else if (action == 3)
+        {
+            if (player.UseItem("Healing Posion"))
+            {
+                ncombatMessage = "=> Healing Potion을 사용했습니다." + to_string(player.getHP())+"/" + to_string((player.getMaxHP()));
+            }
+            else
+            {
+                ncombatMessage ="=> Healing Potion이 없습니다.";
             }
         }
         else

@@ -1,4 +1,6 @@
 #pragma once
+#include <algorithm>
+#include <windows.h>
 
 class Character
 {	
@@ -43,4 +45,5 @@ protected:
 	
 	void TakeDamage(int damage);
 	virtual	 int Attack() const;
+	void Heal(int amount){hp = min(hp+amount,maxhp);} // HP(힐량만큼)회복 , maxHp 초과 불가
 };

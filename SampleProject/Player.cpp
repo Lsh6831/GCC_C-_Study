@@ -11,18 +11,15 @@ Player::Player(const string name, const string& characterClass, bool isHardcore)
 name(name), characterClass(characterClass), isHardcore(isHardcore),
 exp(0), exptoNextLevel(100)//단순 값 세팅 초기화
 {
-    maxhp = vitality *2 ;//계산이 필요한 값 세팅
-    hp = maxhp;
-    maxmp = (int)energy *1.5f ;
-    mp = maxmp;
-    attackDamage = strength*0.2f;
-    attackSpeed = dexterity / 10.0f;
-    movingSpeed = movingSpeed / 30.f;
+    
 }
 
 Player::Player(const string& name, const string& characterClass, bool isHardcore, 
     int str, int dex, int vit, int eng)
-        : Character(str,dex,vit,eng,1),exp(0),exptoNextLevel(100){}
+        : Character(str,dex,vit,eng,1),exp(0),exptoNextLevel(100)
+{
+    inventory.reserve(6);  // 재할당에 따른 복사 (Reallocation)를 방지하기 위해서 미리 capacity 확보
+}
 
 Player::~Player()
 {
@@ -58,15 +55,16 @@ void Player::GainExp(int amoudnt)
         
         exptoNextLevel = level*100;
         cout << "[레벨 업!] Level:" << level << "\n";
-    }
+    }   
 }
 
-void Player::Loot(unique_ptr<Item> item)
+void Player::Loot(Item item)
 {
-    if (!item) return;
-    cout << "\n[System] Looting Items...\n";
-    cout << "[획득] "<< item->name <<"\n";
-    inventory.push_back(*item);
+    
+    cout << "[획득] "<< item.name <<"\n";
+    inventory.emplace_back(std::move(item)); // Item을 인벤토리 안으로 직접 이동 
+    
+    cout<< "[인벤토리] size = " << inventory.size() << "capacity = "  <<inventory.size()<<"\n";
 }
 
 void Player::PrintInventory() const
@@ -85,4 +83,22 @@ void Player::PrintInventory() const
         else typeStr = "Consumable";
         cout << " > Slot " << i << " < [" << inventory[i].name <<"]\n";
     }
+}
+
+bool Player::UseItem(const string& itemName)
+{
+    for (auto it = inventory.begin(); it != inventory.end(); ++it)
+    {
+        if (it->name == itemName)
+        {
+            if (it->type == ItemType::Consumable)
+            {
+                Heal(maxhp); //전체회복
+            }
+            it = inventory.erase(it);//erase 후 유효한 iterator 반환 
+            cout<< "[인벤토리] 아이템 사용 후 size = "<<inventory.size()<<"capacity"<<inventory.capacity()<<"\n";
+            return true;
+        }
+    }
+    return false;
 }
