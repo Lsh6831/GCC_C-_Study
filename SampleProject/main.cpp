@@ -10,6 +10,7 @@
 #include "Sorceress.h"
 #include "Battle.h"
 #include "FireGoblin.h"
+#include "GameInstance.h"
 #include "ItemData.h"
 #include "Monster.h"
 #include "Player.h"
@@ -170,6 +171,8 @@ int main()
 	cin.get(); // 스테이터스 확인 후 대기
 
 	system("cls"); // 화면 지우기
+	
+	GameInstance& gameInstance = GetgameInstance::GetGameInstance();
 	
 	// ItemDB 메인에 생성
 	unordered_map<int ,ItemData> itemDB =createItemDB();
