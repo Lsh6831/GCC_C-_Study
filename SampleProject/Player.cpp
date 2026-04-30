@@ -80,25 +80,57 @@ void Player::PrintInventory() const
         string typeStr;
         if (inventory[i].type == ItemType::Weapon) typeStr = "Weapon";
         else if (inventory[i].type == ItemType::Armor) typeStr = "Armor";
-        else typeStr = "Consumable";
+        else if (inventory[i].type == ItemType::Consumable) typeStr = "Consumable";
+        else typeStr = "ETC";
         cout << " > Slot " << i << " < [" << inventory[i].name <<"]\n";
     }
 }
 
 bool Player::UseItem(const string& itemName)
 {
-    for (auto it = inventory.begin(); it != inventory.end(); ++it)
+    auto it = find_if(inventory.begin(), inventory.end(),
+        [&itemName](const Item& item){ return item.name == itemName; });
+    
+    if (it != inventory.end())
     {
-        if (it->name == itemName)
+        if (it->type==ItemType::Consumable)
         {
-            if (it->type == ItemType::Consumable)
-            {
-                Heal(maxhp); //전체회복
-            }
-            it = inventory.erase(it);//erase 후 유효한 iterator 반환 
-            cout<< "[인벤토리] 아이템 사용 후 size = "<<inventory.size()<<"capacity"<<inventory.capacity()<<"\n";
-            return true;
+            Heal(maxhp);
         }
+        inventory.erase(it);
+        cout << "[인벤토리] 아이템 사용 후 size = "<< inventory.size() << "\n";
+        return true;
+        
     }
     return false;
+    
+    
+    
+    
+    // for (auto it = inventory.begin(); it != inventory.end(); ++it)
+    // {
+    //     if (it->name == itemName)
+    //     {
+    //         if (it->type == ItemType::Consumable)
+    //         {
+    //             Heal(maxhp); //전체회복
+    //         }
+    //         it = inventory.erase(it);//erase 후 유효한 iterator 반환 
+    //         cout<< "[인벤토리] 아이템 사용 후 size = "<<inventory.size()<<"capacity"<<inventory.capacity()<<"\n";
+    //         return true;
+    //     }
+    // }
+    // return false;
+}
+
+void Player::SortInventory()
+{
+    sort(
+        inventory.begin(),inventory.end(), // 정렬 범위 = inventory 전체
+        [](const Item& a, const Item& b) // 3번째 param 으로 기준 설정 람다로 직접 함수 구현
+        {
+            return a.name < b.name; // a가 b보다 앞에오면 true -> 오름 차순
+        }
+        );
+    cout << "[인벤토리] 이름 정렬 완료.\n";
 }

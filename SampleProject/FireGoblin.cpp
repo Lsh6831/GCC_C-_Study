@@ -1,7 +1,7 @@
 #include "FireGoblin.h"
 
-FireGoblin::FireGoblin(const string& name, int str, int dex, int vit, int eng, int expReward,int lv,vector<int> drop)
-    : Monster(name, str,dex,vit,eng,expReward,lv,dropPool){}
+FireGoblin::FireGoblin(const string& name, int str, int dex, int vit, int eng, int expReward, int lv, vector<int> drop)
+    : Monster(name, str, dex, vit, eng, expReward, lv, drop) {}
 
 int FireGoblin::Attack() const
 {

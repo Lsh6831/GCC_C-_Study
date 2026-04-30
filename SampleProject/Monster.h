@@ -13,7 +13,7 @@ class Monster : public Character
 private:
 	string name;
 	int expReward;
-	pmr::vector<int> dropPool; //몬스터가 드롭 가능한 아이템 ID목록
+	vector<int> dropPool; //몬스터가 드롭 가능한 아이템 ID목록
 	
 public:
 	Monster(const string& name, int str,int dex,int vit, int eng,int expReward ,int lv= 1,vector<int> dropPool={});

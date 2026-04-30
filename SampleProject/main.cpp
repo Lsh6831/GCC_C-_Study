@@ -5,7 +5,7 @@
 #include  <vector>
 #include  <memory>
 #include <unordered_map>
-
+#include "MonsterData.h"
 #include "Barbarian.h"
 #include "Sorceress.h"
 #include "Battle.h"
@@ -14,7 +14,7 @@
 #include "Monster.h"
 #include "Player.h"
 #include "Mercenary.h"
-
+#include "MonsterData.h"
 
 using namespace std;
 
@@ -173,7 +173,8 @@ int main()
 	
 	// ItemDB 메인에 생성
 	unordered_map<int ,ItemData> itemDB =createItemDB();
-	
+	// MonsterDB 메인에 생성
+	unordered_map<string, MonsterData> monsterDB = createMonsterDB();
 	
 	
 	shared_ptr<Mercenary> mercenary = make_shared <Mercenary>("Rogue",12,playerPtr);
@@ -203,14 +204,21 @@ int main()
 
 	//기본 전투 시작 (고블린 등장)
 	int pandingExp =0;
+	// MonsterDB에서 스탯/드롭풀을 조회 -> 밸런스 조정할때는 MonsterData.cpp만 수정
 	vector<unique_ptr<Monster>> monsters; 
 	{
-		monsters.push_back(make_unique<Monster>("Goblin",50,0,1,0,50,1 ,vector<int>{101,102}));
-		monsters.push_back(make_unique<FireGoblin>("FireGoblin",50,0,5,0,50,1 ,vector<int>{101,102}));
-		monsters.push_back(make_unique<Monster>("Skeloton",60,0,2,0,70,1 ,vector<int>{101,102}));
-		monsters.push_back(make_unique<Monster>("Wraith",50,0,3,0,80,1 ,vector<int>{101,102}));
-		monsters.push_back(make_unique<Monster>("Ghoul",70,0,4,0,120,1 ,vector<int>{101,102}));
-		monsters.push_back(make_unique<Monster>("Andariel",200,0,8,0,500,1 ,vector<int>{101,102}));
+		auto& goblin = monsterDB["Goblin"];
+		auto& fireGoblin = monsterDB["FireGoblin"];
+		auto& skeleton = monsterDB["Skeleton"];
+		auto& wraith = monsterDB["Wraith"];
+		auto& ghoul = monsterDB["Ghoul"];
+		auto& andariel = monsterDB["Andariel"];
+		monsters.push_back(make_unique<Monster>("Goblin", goblin.str, goblin.dex ,goblin.vit ,goblin.eng ,goblin.expReward, 1, goblin.dropPool));
+		// monsters.push_back(make_unique<FireGoblin>("FireGoblin", 50, 0 ,15 ,0 ,50, 1, vector<int>{101, 102}));
+		// monsters.push_back(make_unique<Monster>("Skeleton", 60, 0 ,20 ,0 ,50, 1, vector<int>{103, 202, 101}));
+		// monsters.push_back(make_unique<Monster>("Wraith", 50, 0 ,25 ,0 ,50, 1, vector<int>{301, 302}));
+		// monsters.push_back(make_unique<Monster>("Ghoul", 70, 0 ,35 ,0 ,120, 1, vector<int>{201, 102, 101}));
+		// monsters.push_back(make_unique<Monster>("Andariel", 200, 0 ,150 ,0 ,500, 1, vector<int>{101, 102}));	
 	};
 	for (auto& monster : monsters)
 	{
@@ -300,6 +308,7 @@ int main()
 			}
 		}
 		player.PrintInventory();
+		player.SortInventory();
 		player.PrintLevel();
 	}
 }
