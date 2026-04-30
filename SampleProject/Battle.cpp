@@ -6,7 +6,11 @@
 #include "Mercenary.h"
 
 Battle::Battle(Player& player, Monster& monster,shared_ptr<Mercenary> mercenary)
-    :player(player), monster(monster),mercenary(mercenary), ncombatMessage("[System] Battle Started") {}
+    :player(player), monster(monster),mercenary(mercenary),battleLog(5)
+
+    {
+        battleLog.push("[System] Battle Started!");
+    }
 
 void Battle::printHPBar(string name, int current, int max)
 {
@@ -75,7 +79,7 @@ bool Battle::Run()
             {
                 int mercDmg =mercenary->Attack();
                 monster.TakeDamage(mercDmg);
-                ncombatMessage += "\n=> ["+mercenary->name+"attacked! (Dmg: " +to_string(player.Attack())+")";
+                battleLog.push("\n=> ["+mercenary->name+"attacked! (Dmg: " +to_string(player.Attack())+")");
             }
 
             if (monster.isAlive())
@@ -94,7 +98,7 @@ bool Battle::Run()
             {
                 int mercDmg =mercenary->Attack();
                 monster.TakeDamage(mercDmg);
-                ncombatMessage += "\n=> ["+mercenary->name+"attacked! (Dmg: " +to_string(player.Attack())+")";
+                battleLog.push("\n=> ["+mercenary->name+"attacked! (Dmg: " +to_string(player.Attack())+")");
             }
 
             if (monster.isAlive()) {
@@ -107,11 +111,11 @@ bool Battle::Run()
         {
             if (player.UseItem("Healing Posion"))
             {
-                ncombatMessage = "=> Healing Potion을 사용했습니다." + to_string(player.getHP())+"/" + to_string((player.getMaxHP()));
+                battleLog.push("=> Healing Potion을 사용했습니다." + to_string(player.getHP())+"/" + to_string((player.getMaxHP())));
             }
             else
             {
-                ncombatMessage ="=> Healing Potion이 없습니다.";
+                 battleLog.push("=> Healing Potion이 없습니다.");
             }
         }
         else
@@ -120,7 +124,8 @@ bool Battle::Run()
             int mDamage = monster.Attack();
             player.TakeDamage(mDamage);
         }
-
+        
+        battleLog.prinAll();
         cout << "\n Press [Enter] to continue...";
         cin.ignore(1000, '\n');
         cin.get();
